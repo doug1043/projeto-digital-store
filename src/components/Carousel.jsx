@@ -5,7 +5,7 @@ import Gallery from "./Gallery";
 const CarouselContainer = styled("div")({
   position: "relative",
   width: "100%",
-  height: "681px",
+  height: "620px",
 });
 
 const InfoBox = styled("div")(({ theme }) => ({
@@ -36,7 +36,7 @@ const Description = styled("p")(({ theme }) => ({
 const StyledButton = styled("button")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: "white",
-  padding: "0.6em 1.2em",
+  padding: "0.6em 3em",
   borderRadius: "8px",
   border: "none",
   cursor: "pointer",
@@ -49,14 +49,14 @@ const StyledButton = styled("button")(({ theme }) => ({
 }));
 
 const slides = [
-  { src: "/public/home-slide-1.jpeg", title: "Queima de estoque Nike 🔥" },
-  { src: "/public/home-slide-2.jpeg", title: "Queima de estoque Adidas" },
-  { src: "/public/home-slide-3.jpeg", title: "Promoção Puma" },
-  { src: "/public/home-slide-4.jpeg", title: "Queima de estoque Nike 🔥" },
-  { src: "/public/home-slide-5.jpeg", title: "Queima de estoque Adidas" },
-  { src: "/public/home-slide-6.jpeg", title: "Promoção Puma" },
-  { src: "/public/home-slide-7.jpeg", title: "Queima de estoque Adidas" },
-  { src: "/public/home-slide-8.jpeg", title: "Promoção Puma" },
+  { src: "/home-slide-1.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-2.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-3.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-4.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-5.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-6.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-7.jpeg", title: "Queima de estoque Nike 🔥" },
+  { src: "/home-slide-8.jpeg", title: "Queima de estoque Nike 🔥" },
 ];
 
 const Carousel = () => {
@@ -67,7 +67,7 @@ const Carousel = () => {
       <Gallery
         images={slides}
         width="100%"
-        height="681px"
+        height="600px"
         showThumbs={false}
         currentIndex={currentIndex}
         onSlideChange={setCurrentIndex}
