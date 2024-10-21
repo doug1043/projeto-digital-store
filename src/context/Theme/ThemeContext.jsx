@@ -25,13 +25,13 @@ const theme = createTheme({
       main: "#F6AA1C",
     },
     grayscale: {
-      darkGray: "#1F1F1F",
+      darkGrayc: "#1F1F1F",
       darkGray2: "#474747",
       darkGray3: "#666666",
-      lightGray: "#8F8F8F",
+      lightGrayc: "#8F8F8F",
       lightGray2: "#CCCCCC",
       lightGray3: "#F5F5F5",
-      white: "#FFFFFF",
+      whitec: "#FFFFFF",
     },
   },
 });
