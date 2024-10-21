@@ -4,14 +4,15 @@ import { styled } from "@mui/system";
 
 // Estilizando o título
 const Title = styled(Typography)(({ theme }) => ({
-  color: theme.palette.grayscale.darkGray2, // Cor darkGray2 definida no seu themeContext
+  color: theme.palette.grayscale.darkGray2, // Cor darkGray2
   fontSize: "24px",
   fontWeight: "bold",
+  titleAlign: "left",
 }));
 
 // Estilizando o link
 const StyledLink = styled(MuiLink)(({ theme }) => ({
-  color: theme.palette.primary.main, // Cor primary já definida no seu themeContext
+  color: theme.palette.primary.main, // Cor primary
   fontSize: "18px",
   textDecoration: "none",
   "&:hover": {
@@ -22,10 +23,10 @@ const StyledLink = styled(MuiLink)(({ theme }) => ({
 // Estilizando o container da seção
 const SectionContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
+  width: "90%",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.grayscale.lightGray3, // Exemplo usando lightGray3
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   marginBottom: theme.spacing(4),
+  margin: "0 auto",
 }));
 
 // Estilizando o header que contém o título e o link
@@ -36,19 +37,13 @@ const Header = styled(Box)(({ titleAlign }) => ({
   marginBottom: "16px",
 }));
 
-const Section = ({ title, titleAlign = "left", link, children }) => {
+const Section = ({ title, link, children }) => {
   return (
     <SectionContainer>
       {/* Header para o título e link */}
-      <Header titleAlign={titleAlign}>
+      <Header>
         {/* Título da seção */}
-        <Title
-          sx={{
-            textAlign: titleAlign,
-          }}
-        >
-          {title}
-        </Title>
+        <Title>{title}</Title>
 
         {/* Link opcional */}
         {link && (
