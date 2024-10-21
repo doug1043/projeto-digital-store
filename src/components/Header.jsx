@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Typography, Button, InputBase, IconButton } from "@mui/material";
+import { IconButton, InputBase } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 
+// Styled Components
 const HeaderContainer = styled(Box)(({ theme }) => ({
   width: "100%",
   backgroundColor: theme.palette.background.paper,
@@ -35,10 +36,49 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   margin: "0 24px",
 }));
 
+const StyledInputBase = styled(InputBase)({
+  width: "100%",
+});
+
+const StyledSearchIconButton = styled(IconButton)({
+  padding: "8px",
+});
+
 const ActionsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: theme.spacing(2),
+}));
+
+const SignUpText = styled("span")(({ theme }) => ({
+  cursor: "pointer",
+  color: "darkgray",
+  textDecoration: "underline",
+  fontSize: "16px",
+}));
+
+const LoginButton = styled("button")(({ theme }) => ({
+  width: "114px",
+  height: "40px",
+  borderRadius: "4px",
+  fontWeight: "bold",
+  fontSize: "14px",
+  color: "white",
+  backgroundColor: theme.palette.primary.main,
+  border: "none",
+  cursor: "pointer",
+  padding: "8px 16px",
+  "&:hover": {
+    backgroundColor: theme.palette.primary.dark,
+  },
+}));
+
+const CartButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+
+const CartCount = styled("span")(({ theme }) => ({
+  marginLeft: "5px",
 }));
 
 const NavigationRow = styled(Box)(({ theme }) => ({
@@ -49,122 +89,76 @@ const NavLinks = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: theme.spacing(4),
-  "& a": {
-    textDecoration: "none",
-    color: theme.palette.text.primary,
-    fontWeight: 500,
-    position: "relative",
-    padding: "6px 0",
-    "&:hover": {
-      color: theme.palette.primary.main,
-    },
-    "&.active": {
-      color: theme.palette.primary.main,
-      "&:after": {
-        transform: "scaleX(1)",
-      },
-    },
-    "&:after": {
-      content: '""',
-      position: "absolute",
-      left: 0,
-      right: 0,
-      bottom: 0,
-      height: "2px",
-      backgroundColor: theme.palette.primary.main,
-      transform: "scaleX(0)",
-      transition: "transform 0.3s ease",
-      transformOrigin: "center",
-    },
+}));
+
+const StyledLink = styled(Link)(({ theme, isActive }) => ({
+  textDecoration: "none",
+  color: isActive ? theme.palette.primary.main : theme.palette.text.primary,
+  fontWeight: 500,
+  position: "relative",
+  padding: "6px 0",
+  "&:hover": {
+    color: theme.palette.primary.main,
+  },
+  "&:after": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "2px",
+    backgroundColor: theme.palette.primary.main,
+    transform: isActive ? "scaleX(1)" : "scaleX(0)",
+    transition: "transform 0.3s ease",
+    transformOrigin: "center",
+  },
+  "&:hover:after": {
+    transform: "scaleX(1)",
   },
 }));
 
 const Header = () => {
   const location = useLocation();
 
+  const NavItem = ({ to, children }) => (
+    <StyledLink to={to} isActive={location.pathname === to}>
+      {children}
+    </StyledLink>
+  );
+
   return (
     <HeaderContainer>
       <TopRow>
-        {/* Logo */}
         <LogoContainer>
           <Logo />
         </LogoContainer>
 
-        {/* Search Bar */}
         <SearchContainer>
-          <InputBase
+          <StyledInputBase
             placeholder="Pesquisar produto..."
-            fullWidth
             inputProps={{ "aria-label": "Pesquisar" }}
           />
-          <IconButton type="submit" aria-label="search">
+          <StyledSearchIconButton type="submit" aria-label="search">
             <SearchIcon />
-          </IconButton>
+          </StyledSearchIconButton>
         </SearchContainer>
 
-        {/* Actions */}
         <ActionsContainer>
-          <Typography
-            variant="body2"
-            sx={{
-              cursor: "pointer",
-              color: "darkgray",
-              textDecoration: "underline",
-              fontSize: "16px",
-            }}
-          >
-            Cadastre-se
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "114px",
-              height: "40px",
-              borderRadius: "4px",
-              fontWeight: "bold",
-              fontSize: "14px",
-              color: "white",
-            }}
-          >
-            Entrar
-          </Button>
-          <IconButton aria-label="carrinho de compras" color="primary">
+          <SignUpText>Cadastre-se</SignUpText>
+          <LoginButton>Entrar</LoginButton>
+          <CartButton aria-label="carrinho de compras">
             <ShoppingCartIcon />
-            <Typography variant="body2" sx={{ marginLeft: "5px" }}>
-              2
-            </Typography>
-          </IconButton>
+            <CartCount>2</CartCount>
+          </CartButton>
         </ActionsContainer>
       </TopRow>
 
-      {/* Navigation */}
       <NavigationRow>
         <NavLinks>
-          <Link
-            to="/home"
-            className={location.pathname === "/" ? "active" : ""}
-          >
-            Home
-          </Link>
-          <Link
-            to="/produtos"
-            className={location.pathname === "/produtos" ? "active" : ""}
-          >
-            Produtos
-          </Link>
-          <Link
-            to="/categorias"
-            className={location.pathname === "/categorias" ? "active" : ""}
-          >
-            Categorias
-          </Link>
-          <Link
-            to="/meus-pedidos"
-            className={location.pathname === "/meus-pedidos" ? "active" : ""}
-          >
-            Meus Pedidos
-          </Link>
+          <NavItem to="/home">Home</NavItem>
+          <NavItem to="/produtos">Produtos</NavItem>
+          <NavItem to="/categorias">Categorias</NavItem>
+          <NavItem to="/meus-pedidos">Meus Pedidos</NavItem>
         </NavLinks>
       </NavigationRow>
     </HeaderContainer>
