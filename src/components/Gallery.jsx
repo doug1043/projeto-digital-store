@@ -1,12 +1,17 @@
-import React, { useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import ArrowRightIcon from "@mui/icons-material/ArrowForward"; // Altere para o caminho correto do ícone
-import ArrowLeftIcon from "@mui/icons-material/ArrowBack"; // Altere para o caminho correto do ícone
+import React, { useState, useEffect, useCallback } from "react";
 import { styled } from "@mui/material/styles";
+import ArrowRightIcon from "@mui/icons-material/ArrowForward";
+import ArrowLeftIcon from "@mui/icons-material/ArrowBack";
 
-const ImageContainer = styled(Box)(({ width, height }) => ({
-  width: width,
-  height: height,
+const GalleryContainer = styled("div")({
+  position: "relative",
+  width: "100%",
+  height: "100%",
+});
+
+const ImageContainer = styled("div")(({ width, height }) => ({
+  width: width || "100%",
+  height: height || "100%",
   overflow: "hidden",
   position: "relative",
 }));
@@ -15,104 +20,177 @@ const MainImage = styled("img")(({ radius }) => ({
   width: "100%",
   height: "100%",
   objectFit: "cover",
-  borderRadius: radius,
+  borderRadius: radius || "0",
   transition: "transform 0.5s ease-in-out",
 }));
 
-const ThumbnailContainer = styled(Box)(({ radius }) => ({
+const NavigationButton = styled("button")(({ theme, position }) => ({
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  [position]: theme.spacing(2),
+  backgroundColor: "rgba(255, 255, 255, 0.8)",
+  border: "none",
+  borderRadius: "50%",
+  width: "40px",
+  height: "40px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  transition: "background-color 0.2s",
+  zIndex: 2,
+  "&:hover": {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+  },
+  "& svg": {
+    fontSize: "24px",
+    color: theme.palette.grey[800],
+  },
+}));
+
+const ThumbnailContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
-  marginTop: "10px",
-  gap: "5px",
+  marginTop: theme.spacing(1),
+  gap: theme.spacing(0.5),
 }));
 
-const Thumbnail = styled("img")(({ isSelected, radius }) => ({
+const Thumbnail = styled("img")(({ theme, isSelected }) => ({
   width: "117px",
   height: "95px",
-  borderRadius: radius,
-  border: isSelected ? "2px solid" : "none",
-  borderColor: "primary.main",
+  borderRadius: theme.spacing(1),
+  border: isSelected ? `2px solid ${theme.palette.primary.main}` : "none",
   cursor: "pointer",
-  transition: "border 0.3s ease-in-out",
+  transition: "border-color 0.3s ease-in-out",
+  opacity: isSelected ? 1 : 0.7,
+  "&:hover": {
+    opacity: 1,
+  },
 }));
 
-const Gallery = ({ images, width, height, radius, showThumbs, className }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const Gallery = ({
+  images,
+  width,
+  height,
+  radius,
+  showThumbs = false,
+  className,
+  currentIndex: controlledIndex,
+  onSlideChange,
+  autoPlay = false,
+  interval = 5000,
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(controlledIndex || 0);
 
-  const handleNext = () => {
-    if (currentIndex < images.length - 1) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
+  const updateIndex = useCallback(
+    (newIndex) => {
+      const index =
+        newIndex < 0
+          ? images.length - 1
+          : newIndex >= images.length
+          ? 0
+          : newIndex;
+
+      setCurrentIndex(index);
+      if (onSlideChange) {
+        onSlideChange(index);
+      }
+    },
+    [images.length, onSlideChange]
+  );
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (!autoPlay) return;
+
+    const timer = setInterval(() => {
+      updateIndex(currentIndex + 1);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [autoPlay, interval, currentIndex, updateIndex]);
+
+  // Sync with controlled index
+  useEffect(() => {
+    if (controlledIndex !== undefined && controlledIndex !== currentIndex) {
+      setCurrentIndex(controlledIndex);
     }
-  };
+  }, [controlledIndex]);
 
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
-  };
+  const handleNext = useCallback(() => {
+    updateIndex(currentIndex + 1);
+  }, [currentIndex, updateIndex]);
 
-  const handleThumbnailClick = (index) => {
-    setCurrentIndex(index);
-  };
+  const handlePrevious = useCallback(() => {
+    updateIndex(currentIndex - 1);
+  }, [currentIndex, updateIndex]);
+
+  const handleThumbnailClick = useCallback(
+    (index) => {
+      updateIndex(index);
+    },
+    [updateIndex]
+  );
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "ArrowLeft") {
+        handlePrevious();
+      } else if (event.key === "ArrowRight") {
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrevious]);
+
+  if (!images?.length) {
+    return null;
+  }
 
   return (
-    <Box className={className}>
+    <GalleryContainer className={className}>
       <ImageContainer width={width} height={height}>
-        {currentIndex > 0 && (
-          <IconButton
-            onClick={handlePrevious}
-            disabled={currentIndex === 0}
-            sx={{
-              position: "absolute",
-              left: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
-          >
-            <ArrowLeftIcon />
-          </IconButton>
-        )}
+        <NavigationButton
+          onClick={handlePrevious}
+          position="left"
+          aria-label="Previous image"
+        >
+          <ArrowLeftIcon />
+        </NavigationButton>
 
         <MainImage
           src={images[currentIndex]?.src}
-          alt={`Image ${currentIndex + 1}`}
+          alt={images[currentIndex]?.title || `Image ${currentIndex + 1}`}
           radius={radius}
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
-          }}
         />
 
-        {currentIndex < images.length - 1 && (
-          <IconButton
-            onClick={handleNext}
-            disabled={currentIndex === images.length - 1}
-            sx={{
-              position: "absolute",
-              right: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
-          >
-            <ArrowRightIcon />
-          </IconButton>
-        )}
+        <NavigationButton
+          onClick={handleNext}
+          position="right"
+          aria-label="Next image"
+        >
+          <ArrowRightIcon />
+        </NavigationButton>
       </ImageContainer>
 
       {showThumbs && (
-        <ThumbnailContainer radius={radius}>
+        <ThumbnailContainer>
           {images.map((image, index) => (
             <Thumbnail
               key={index}
               src={image.src}
-              alt={`Thumbnail ${index + 1}`}
+              alt={image.title || `Thumbnail ${index + 1}`}
               onClick={() => handleThumbnailClick(index)}
               isSelected={currentIndex === index}
-              radius={radius}
             />
           ))}
         </ThumbnailContainer>
       )}
-    </Box>
+    </GalleryContainer>
   );
 };
 
