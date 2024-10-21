@@ -1,121 +1,152 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
-import { minWidth, styled } from "@mui/system";
-import Carousel from "../../components/Carousel";
+import { styled } from "@mui/material/styles";
 import Layout from "../../layout";
-import ProductListing from "../../components/ProductListening";
 import oferta from "../../assets/oferta.png";
+import Section from "../../components/Section";
+import Carousel from "../../components/Carousel";
+import ProductCard from "../../components/ProductCard";
 
-// Estilizando o componente da imagem
-const StyledImage = styled("img")(({ theme }) => ({
+const ProductSection = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  [theme.breakpoints.up("sm")]: {
+    flexDirection: "row",
+  },
+  alignItems: "center",
+  width: "100%",
+}));
+
+const ProductImage = styled("img")(({ theme }) => ({
   height: "auto",
-  borderRadius: "8px",
+  width: "100%",
+  maxWidth: "100%",
+  borderRadius: theme.spacing(1),
+  marginBottom: theme.spacing(3),
   [theme.breakpoints.up("sm")]: {
     maxWidth: "750px",
+    marginBottom: 0,
   },
 }));
 
-// Estilizando o texto "Oferta especial"
-const SpecialOffer = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  fontWeight: "bold",
-  fontSize: "1.2em",
+const ProductContent = styled("div")(({ theme }) => ({
+  textAlign: "center",
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    textAlign: "left",
+    marginLeft: theme.spacing(4),
+    maxWidth: "50%",
+  },
 }));
 
-// Estilizando o botão "Ver Oferta"
-const OfferButton = styled(Button)(({ theme }) => ({
+const SpecialOfferTag = styled("span")(({ theme }) => ({
+  display: "inline-block",
+  color: theme.palette.primary.main,
+  fontWeight: 700,
+  fontSize: "1.2em",
+  marginBottom: theme.spacing(2),
+}));
+
+const ProductTitle = styled("h2")(({ theme }) => ({
+  fontSize: "2rem",
+  fontWeight: 700,
+  marginBottom: theme.spacing(2),
+  color: theme.palette.text.primary,
+}));
+
+const ProductDescription = styled("p")(({ theme }) => ({
+  fontSize: "1rem",
+  lineHeight: 1.6,
+  marginBottom: theme.spacing(3),
+  color: theme.palette.text.secondary,
+}));
+
+const OfferButton = styled("button")(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
-  color: "white",
-  padding: "10px 20px",
-  borderRadius: "8px",
-  fontWeight: "bold",
-  marginTop: theme.spacing(2),
+  color: theme.palette.common.white,
+  padding: "12px 24px",
+  borderRadius: theme.spacing(1),
+  border: "none",
+  fontWeight: 700,
+  fontSize: "1rem",
+  cursor: "pointer",
+  transition: "all 0.2s ease-in-out",
   "&:hover": {
     backgroundColor: theme.palette.secondary.dark,
+    transform: "translateY(-2px)",
   },
+  "&:active": {
+    transform: "translateY(0)",
+  },
+}));
+
+const CollectionCards = styled("div")(({ theme }) => ({
+  padding: "16px 0",
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "16px",
 }));
 
 const HomePage = () => {
   const products = [
     {
-      name: "Nome do produto 1",
-      image: "https://url.imagem/do/produto1.png",
+      name: "Novo drop supreme",
+      image: "/collection-1.png",
       price: 200,
       priceDiscount: 149.9,
     },
     {
-      name: "Nome do produto 2",
-      image: "https://url.imagem/do/produto2.png",
+      name: "Coleção Adidas",
+      image: "/collection-2.png",
+      price: 49.9,
+    },
+    {
+      name: "Novo beats bass",
+      image: "/collection-3.png",
       price: 49.9,
     },
   ];
 
   return (
     <Layout>
-      {/* Primeiro Box para o Carousel */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: "center",
-          padding: 4,
-          backgroundColor: "#f9f9f9",
-          borderRadius: "16px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          marginBottom: 4,
-        }}
-      >
-        <Carousel />
-      </Box>
+      {/* Carousel */}
+      <Carousel />
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: "center",
-          padding: 4,
-          backgroundColor: "#f9f9f9",
-          borderRadius: "16px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          marginBottom: 4,
-        }}
-      >
-        <ProductListing products={products} />
-      </Box>
+      {/* Coleções em destaque */}
+      <Section title="Coleções em destaque">
+        <CollectionCards>
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              title={product.name}
+              image={product.image}
+              discount="30%"
+            />
+          ))}
+        </CollectionCards>
+      </Section>
 
-      {/* Segundo Box para o conteúdo do produto */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: "center",
-          padding: 4,
-          backgroundColor: "#f9f9f9",
-          borderRadius: "16px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <StyledImage src={oferta} alt="Air Jordan edição de colecionador" />
+      {/* Seção de oferta especial */}
+      <Section title="Oferta Especial" link={{ text: "Ver Mais", href: "#" }}>
+        <ProductSection>
+          <ProductImage
+            src={oferta}
+            alt="Air Jordan edição de colecionador"
+            loading="lazy"
+          />
 
-        <Box
-          sx={{
-            marginLeft: { xs: 0, sm: 4 },
-            textAlign: { xs: "center", sm: "left" },
-          }}
-        >
-          <SpecialOffer>Oferta especial</SpecialOffer>
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
-            Air Jordan edição de colecionador
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip.
-          </Typography>
-          <OfferButton>Ver Oferta</OfferButton>
-        </Box>
-      </Box>
+          <ProductContent>
+            <SpecialOfferTag>Oferta especial</SpecialOfferTag>
+            <ProductTitle>Air Jordan edição de colecionador</ProductTitle>
+            <ProductDescription>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip.
+            </ProductDescription>
+            <OfferButton>Ver Oferta</OfferButton>
+          </ProductContent>
+        </ProductSection>
+      </Section>
     </Layout>
   );
 };
