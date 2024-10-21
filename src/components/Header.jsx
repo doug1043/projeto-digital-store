@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, InputBase } from "@mui/material";
+import { IconButton, InputBase, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -8,9 +8,10 @@ import Logo from "./Logo";
 
 // Styled Components
 const HeaderContainer = styled(Box)(({ theme }) => ({
-  width: "100%",
+  width: "90%",
   backgroundColor: theme.palette.background.paper,
-  boxShadow: "0 4px 2px -2px gray",
+  margin: "0 auto",
+  marginBottom: "10px",
 }));
 
 const TopRow = styled(Box)(({ theme }) => ({
@@ -155,7 +156,7 @@ const Header = () => {
 
       <NavigationRow>
         <NavLinks>
-          <NavItem to="/home">Home</NavItem>
+          <NavItem to="/">Home</NavItem>
           <NavItem to="/produtos">Produtos</NavItem>
           <NavItem to="/categorias">Categorias</NavItem>
           <NavItem to="/meus-pedidos">Meus Pedidos</NavItem>
