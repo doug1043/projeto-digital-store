@@ -23,7 +23,7 @@ const ProductImage = styled("img")(({ theme }) => ({
   borderRadius: theme.spacing(1),
   marginBottom: theme.spacing(3),
   [theme.breakpoints.up("sm")]: {
-    maxWidth: "750px",
+    maxWidth: "550px",
     marginBottom: 0,
   },
 }));
@@ -34,7 +34,7 @@ const ProductContent = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     textAlign: "left",
     marginLeft: theme.spacing(4),
-    maxWidth: "50%",
+    maxWidth: "30%",
   },
 }));
 
@@ -125,28 +125,27 @@ const HomePage = () => {
         </CollectionCards>
       </Section>
 
-      {/* Seção de oferta especial */}
-      <Section title="Oferta Especial" link={{ text: "Ver Mais", href: "#" }}>
-        <ProductSection>
-          <ProductImage
-            src={oferta}
-            alt="Air Jordan edição de colecionador"
-            loading="lazy"
-          />
+      {/* <Section title="Oferta Especial" link={{ text: "Ver Mais", href: "#" }}></Section> */}
 
-          <ProductContent>
-            <SpecialOfferTag>Oferta especial</SpecialOfferTag>
-            <ProductTitle>Air Jordan edição de colecionador</ProductTitle>
-            <ProductDescription>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip.
-            </ProductDescription>
-            <OfferButton>Ver Oferta</OfferButton>
-          </ProductContent>
-        </ProductSection>
-      </Section>
+      <ProductSection>
+        <ProductImage
+          src={oferta}
+          alt="Air Jordan edição de colecionador"
+          loading="lazy"
+        />
+
+        <ProductContent>
+          <SpecialOfferTag>Oferta especial</SpecialOfferTag>
+          <ProductTitle>Air Jordan edição de colecionador</ProductTitle>
+          <ProductDescription>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip.
+          </ProductDescription>
+          <OfferButton>Ver Oferta</OfferButton>
+        </ProductContent>
+      </ProductSection>
     </Layout>
   );
 };
