@@ -11,10 +11,18 @@ const CarouselContainer = styled("div")({
 const InfoBox = styled("div")(({ theme }) => ({
   position: "absolute",
   color: theme.palette.grayscale.darkGrayc,
-  top: "20%",
+  top: "0",
   left: "10%",
+  backgroundColor: "rgba(255, 255, 255, 0.459)", // Fundo branco com transparência
   zIndex: 1,
   maxWidth: "600px",
+  height: "100%",
+  alignContent: "center",
+  padding: `
+  ${theme.spacing(0)} 
+  ${theme.spacing(4)} 
+  ${theme.spacing(4)} 
+  ${theme.spacing(8)}`,
 }));
 
 const Title = styled("h2")(({ theme }) => ({
