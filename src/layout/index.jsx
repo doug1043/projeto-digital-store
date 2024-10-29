@@ -2,10 +2,18 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+const BoxLayout = styled("Box")(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "100vh",
+}));
 
 const Layout = ({ children }) => {
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <BoxLayout>
       {/* Componente do cabeçalho */}
       <Header />
 
@@ -16,7 +24,7 @@ const Layout = ({ children }) => {
 
       {/* Componente do rodapé */}
       <Footer />
-    </Box>
+    </BoxLayout>
   );
 };
 
