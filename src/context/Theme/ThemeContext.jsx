@@ -3,6 +3,7 @@ import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
+import "@fontsource/rethink-sans";
 
 const theme = createTheme({
   palette: {
@@ -33,6 +34,9 @@ const theme = createTheme({
       lightGray3: "#F5F5F5",
       whitec: "#FFFFFF",
     },
+  },
+  typography: {
+    fontFamily: "'Rethink Sans', sans-serif", // Define a fonte
   },
 });
 
