@@ -5,15 +5,16 @@ import oferta from "../../assets/oferta.png";
 import Section from "../../components/Section";
 import Carousel from "../../components/Carousel";
 import ProductCard from "../../components/ProductCard";
+import FeaturedCollections from "../../components/FeaturedCollections";
 
 const ProductSection = styled("div")(({ theme }) => ({
   display: "flex",
-  flexDirection: "column",
-  [theme.breakpoints.up("sm")]: {
-    flexDirection: "row",
-  },
+  flexDirection: "row",
+  justifyContent: "center",
   alignItems: "center",
   width: "100%",
+  marginTop: "80px",
+  marginBottom: "80px",
 }));
 
 const ProductImage = styled("img")(({ theme }) => ({
@@ -126,6 +127,7 @@ const HomePage = () => {
       </Section>
 
       {/* <Section title="Oferta Especial" link={{ text: "Ver Mais", href: "#" }}></Section> */}
+      <FeaturedCollections />
 
       <ProductSection>
         <ProductImage
