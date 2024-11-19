@@ -6,6 +6,7 @@ import Section from "../../components/Section";
 import Carousel from "../../components/Carousel";
 import ProductCard from "../../components/ProductCard";
 import FeaturedCollections from "../../components/FeaturedCollections";
+import FeaturedProducts from "../../components/FreaturedProducts";
 
 const ProductSection = styled("div")(({ theme }) => ({
   display: "flex",
@@ -19,14 +20,9 @@ const ProductSection = styled("div")(({ theme }) => ({
 
 const ProductImage = styled("img")(({ theme }) => ({
   height: "auto",
-  width: "100%",
-  maxWidth: "100%",
+  width: "600px",
   borderRadius: theme.spacing(1),
   marginBottom: theme.spacing(3),
-  [theme.breakpoints.up("sm")]: {
-    maxWidth: "550px",
-    marginBottom: 0,
-  },
 }));
 
 const ProductContent = styled("div")(({ theme }) => ({
@@ -126,8 +122,9 @@ const HomePage = () => {
         </CollectionCards>
       </Section>
 
-      {/* <Section title="Oferta Especial" link={{ text: "Ver Mais", href: "#" }}></Section> */}
       <FeaturedCollections />
+
+      <FeaturedProducts />
 
       <ProductSection>
         <ProductImage

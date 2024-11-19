@@ -100,7 +100,6 @@ const Gallery = ({
     [images.length, onSlideChange]
   );
 
-  // Autoplay functionality
   useEffect(() => {
     if (!autoPlay) return;
 
@@ -111,7 +110,6 @@ const Gallery = ({
     return () => clearInterval(timer);
   }, [autoPlay, interval, currentIndex, updateIndex]);
 
-  // Sync with controlled index
   useEffect(() => {
     if (controlledIndex !== undefined && controlledIndex !== currentIndex) {
       setCurrentIndex(controlledIndex);
@@ -133,7 +131,6 @@ const Gallery = ({
     [updateIndex]
   );
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "ArrowLeft") {

@@ -13,7 +13,7 @@ const InfoBox = styled("div")(({ theme }) => ({
   color: theme.palette.grayscale.darkGrayc,
   top: "0",
   left: "10%",
-  backgroundColor: "rgba(255, 255, 255, 0.459)", // Fundo branco com transparência
+  backgroundColor: "rgba(255, 255, 255, 0.459)",
   zIndex: 1,
   maxWidth: "600px",
   height: "100%",
@@ -30,7 +30,6 @@ const Title = styled("h2")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "4rem",
   marginBottom: theme.spacing(2),
-  textShadow: "2px 2px 4px rgba(255, 255, 255, 0.7)",
 }));
 
 const Description = styled("p")(({ theme }) => ({
@@ -38,7 +37,6 @@ const Description = styled("p")(({ theme }) => ({
   marginBottom: theme.spacing(3),
   fontSize: "1.5rem",
   lineHeight: 1.5,
-  textShadow: "1px 1px 3px rgba(255, 255, 255, 0.5)",
 }));
 
 const StyledButton = styled("button")(({ theme }) => ({

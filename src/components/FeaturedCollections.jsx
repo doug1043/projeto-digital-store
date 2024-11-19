@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
 
-// Styled components permanecem os mesmos
 const Container = styled("div")({
   padding: "20px 0",
   maxWidth: "1200px",

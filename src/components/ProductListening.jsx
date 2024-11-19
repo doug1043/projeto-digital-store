@@ -9,20 +9,20 @@ const ProductListing = ({ products }) => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      gap={2} // Espaçamento entre os cards
+      gap={2}
       padding={2}
     >
       {products.map((product, index) => (
         <ProductCard
-          key={index} // Utilize um identificador único se disponível
+          key={index}
           image={product.image}
           name={product.name}
-          price={`R$ ${product.price.toFixed(2)}`} // Formatação do preço
+          price={`R$ ${product.price.toFixed(2)}`}
           priceDiscount={
             product.priceDiscount
               ? `R$ ${product.priceDiscount.toFixed(2)}`
               : undefined
-          } // Condicional para desconto
+          }
         />
       ))}
     </Box>
